@@ -30,3 +30,19 @@ x_train = x_train.T
 x_test = x_test.T
 y_train = y_train.T
 y_test = y_test.T
+
+#  initialize parameter and sigmoid function
+# dimension = 30 for tumor features
+def initialize_weights_and_bias(dimension):
+    
+    w = np.full((dimension,1),0.01)
+    b = 0.0 # Focus is bias is better to stay as float
+    return w,b
+
+w,b = initialize_weights_and_bias(30)
+
+#  sigmoid = f(x) = 1/1+ e^-(x) math represantation
+
+def sigmoid(z):
+    y_head = 1/(1 + np.exp(-z))
+    return y_head    
