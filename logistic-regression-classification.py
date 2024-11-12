@@ -47,7 +47,7 @@ def sigmoid(z):
     y_head = 1/(1 + np.exp(-z))
     return y_head    
 
-# %% implement forward and backward propagation
+#  implement forward and backward propagation
 def forward_backward_propagation(w,b,x_train,y_train):
     # forward propagation
     z = np.dot(w.T,x_train) + b
@@ -88,4 +88,42 @@ def update(w, b, x_train, y_train, learning_rate,number_of_iterarion):
     plt.ylabel("Cost")
     plt.show()
     return parameters, gradients, cost_list
+
+#%%  # prediction
+def predict(w,b,x_test):
+    # x_test is a input for forward propagation
+    z = sigmoid(np.dot(w.T,x_test)+b)
+    Y_prediction = np.zeros((1,x_test.shape[1]))
+    # if z is bigger than 0.5, our prediction is sign one (y_head=1),
+    # if z is smaller than 0.5, our prediction is sign zero (y_head=0),
+    for i in range(z.shape[1]):
+        if z[0,i]<= 0.5:
+            Y_prediction[0,i] = 0
+        else:
+            Y_prediction[0,i] = 1
+
+    return Y_prediction
+
+# %% logistic_regression
+def logistic_regression(x_train, y_train, x_test, y_test, learning_rate ,  num_iterations):
+    # initialize
+    dimension =  x_train.shape[0]  # that is 30
+    w,b = initialize_weights_and_bias(dimension)
+    # do not change learning rate
+    parameters, gradients, cost_list = update(w, b, x_train, y_train, learning_rate,num_iterations)
+    
+    y_prediction_test = predict(parameters["weight"],parameters["bias"],x_test)
+
+    # Print test Errors
+    print("test accuracy: {} %".format(100 - np.mean(np.abs(y_prediction_test - y_test)) * 100))
+    
+logistic_regression(x_train, y_train, x_test, y_test,learning_rate = 1, num_iterations = 300)    
+
+
+#%% sklearn with LR
+# from sklearn.linear_model import LogisticRegression
+# lr = LogisticRegression()
+# lr.fit(x_train.T,y_train.T)
+# print("test accuracy {}".format(lr.score(x_test.T,y_test.T)))
+
 
