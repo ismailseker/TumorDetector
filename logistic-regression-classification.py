@@ -25,3 +25,8 @@ from sklearn.model_selection import train_test_split
 x_train,x_test,y_train,y_test = train_test_split(x,y, test_size=0.2,random_state=42)
 
 #  random=state =42 burada tutarlılık sağlıyor, aynı yerden split etmemizi sağlıyor..
+
+x_train = x_train.T
+x_test = x_test.T
+y_train = y_train.T
+y_test = y_test.T
